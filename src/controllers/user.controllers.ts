@@ -61,7 +61,6 @@ class UserController {
         var user = undefined;
         try {
             user = await UserModel.findById({ _id: request.params.id_user });
-            console.log(user)
             await UserModel.deleteOne({ _id: user?._id });
         } catch(error) {
             
@@ -82,7 +81,6 @@ class UserController {
     }
 
     public async updateUser(request: Request, response: Response) {
-        console.log(request.body);
 
         var user_obj: any = {
             first_name: request.body.first_name,
@@ -96,7 +94,6 @@ class UserController {
         };
 
         Object.keys(user_obj).forEach(key => {
-            console.log(key);
             if (user_obj[key] === undefined) {
                 delete user_obj[key];
             }
@@ -107,9 +104,7 @@ class UserController {
             await UserModel.updateOne({ _id: request.params.id_user }, user_obj);
             user = await UserModel.findById({ _id: request.params.id_user });
         } catch(error) {
-            
             console.log(error);
-
             return response.status(400).json({
                 status: "Bad Request",
                 code: 400,
