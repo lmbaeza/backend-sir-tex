@@ -12,23 +12,17 @@ class UserController {
     }
 
     public async getUser(request: Request, response: Response) {
-        console.log(request.params.id_user)
         const all = await User.findById(request.params.id_user);
         response.status(200).json(all);
     }
 
     public async createUser(request: Request, response: Response) {
-        var insentive = [];
-        for(var value of request.body.insentive) {
-            insentive.push(
-                new Insentive({
-                    point: value.point,
-                    weight: value.weight
-                })
-            )
-        }
-        console.log(request.body);
-        console.log(insentive);
+        var insentive = request.body.insentive.map((value: any) => {
+            return new Insentive({
+                point: value.point,
+                weight: value.weight
+            });
+        });
 
         const user = new User({
             first_name: request.body.first_name,
@@ -41,12 +35,26 @@ class UserController {
             update_at: Date.now()
         });
 
-        console.log(user);
+        var answer = undefined;
 
-        const answer = await user.save();
-        console.log(answer);
+        try {
+            answer = await user.save();
+        } catch (error) {
+            console.log(error);
+
+            return response.status(400).json({
+                status: "Bad Request",
+                code: 400,
+                description: "id or username was already registered in the database"
+            });
+        }
         
-        response.status(200).json({});
+        response.status(201).json({
+            status: "Created",
+            code: 201,
+            description: "user was created successfully",
+            user: answer
+        });
     }
 }
 
