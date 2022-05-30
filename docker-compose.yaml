@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  sir-tex:
+    image: sir-tex:latest
+    container_name: sir-tex
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    networks:
+      - sir-tex-network
+    environment:
+      PORT: 3000
+  
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - 27017:27017
+    networks:
+      - sir-tex-network
+  
+networks:
+  sir-tex-network:
+    name: sir-tex-network-name

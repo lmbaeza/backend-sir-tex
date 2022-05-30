@@ -1,5 +1,4 @@
 import express from 'express'
-import path from 'path';
 
 // Importing Routes
 import UserRoutes from './routes/user.router'
@@ -17,9 +16,6 @@ app.use(express.urlencoded({extended: false}));
 
 // Routes
 app.use('/user', UserRoutes);
-
-// Statics Files
-app.use(express.static(path.join(__dirname, 'public')))
 
 // Run Server
 

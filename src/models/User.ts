@@ -1,13 +1,17 @@
 import mongoose, { Schema, model } from 'mongoose';
 
+import { Insentive, InsentiveSchema } from './Insentive'
+
 const ID_TYPES = ['CC', 'CE'];
+const ROLES    = ['ADMIN', 'USER'];
 
 export interface User extends mongoose.Document {
     first_name: string;
     last_name: string;
-    age: number;
     id_type: string;
     id: number;
+    role: string;
+    insentive: Insentive;
     username: string;
     password: string;
     create_at: Date;
@@ -25,11 +29,6 @@ const UserSchema = new Schema({
         uppercase: true, // Always convert `last_name` to uppercase
         required: true
     },
-    age: {
-        type: Number,
-        min: 18,
-        max: 65
-    },
     id_type: {
         type: String,
         uppercase: true, // Always convert `last_name` to uppercase
@@ -38,16 +37,26 @@ const UserSchema = new Schema({
     },
     id: {
         type: Number,
-        required: true
+        required: true,
+        unique: true
+    },
+    role: {
+        type: String,
+        uppercase: true, // Always convert `last_name` to uppercase
+        required: true,
+        enum: ROLES,
+        default: 'USER'
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
         required: true
     },
+    insentive: [InsentiveSchema],
     create_at: {
         type: Date,
         default: Date.now
