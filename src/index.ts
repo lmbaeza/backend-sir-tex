@@ -3,6 +3,7 @@ import express from 'express'
 // Importing Routes
 import UserRoutes from './routes/user.router'
 import ContainerRoutes from './routes/container.router'
+import CompanyRoutes from './routes/company.router'
 
 // Initializations
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.urlencoded({extended: false}));
 // Routes
 app.use('/user', UserRoutes);
 app.use('/container', ContainerRoutes);
+app.use('/company', CompanyRoutes);
 
 // Run Server
 
