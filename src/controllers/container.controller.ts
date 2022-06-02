@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import crypto from 'crypto';
 
 import ContainerModel from '../models/Container'
 
