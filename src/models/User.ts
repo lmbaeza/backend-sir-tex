@@ -11,7 +11,7 @@ export interface User extends mongoose.Document {
     id_type: string;
     id: number;
     role: string;
-    insentive: Insentive;
+    insentive: [Insentive];
     username: string;
     password: string;
     create_at: Date;

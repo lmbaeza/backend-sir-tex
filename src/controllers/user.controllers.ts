@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import crypto from 'crypto';
 
-import Insentive from '../models/Insentive';
+import InsentiveModel from '../models/Insentive';
 import UserModel from '../models/User'
 
 class UserController {
@@ -18,11 +18,13 @@ class UserController {
 
     public async createUser(request: Request, response: Response) {
         var insentive = request.body.insentive.map((value: any) => {
-            return new Insentive({
+            return new InsentiveModel({
                 point: value.point,
                 weight: value.weight
             });
         });
+
+        InsentiveModel.insertMany(insentive);
 
         const user = new UserModel({
             first_name: request.body.first_name,
@@ -61,6 +63,12 @@ class UserController {
         var user = undefined;
         try {
             user = await UserModel.findById({ _id: request.params.id_user });
+            var arr = user?.insentive;
+            if(arr !== undefined) {
+                for(var value of arr) {
+                    await InsentiveModel.deleteOne({ _id: value?._id });
+                }
+            }
             await UserModel.deleteOne({ _id: user?._id });
         } catch(error) {
             
@@ -101,6 +109,28 @@ class UserController {
 
         var user = undefined;
         try {
+            user = await UserModel.findById({ _id: request.params.id_user });
+
+            var arr = user?.insentive;
+            if(arr !== undefined) {
+                for(var value of arr) {
+                    await InsentiveModel.deleteOne({ _id: value?._id });
+                }
+            }
+
+            if(user_obj['insentive'] !== undefined) {
+                user_obj.insentive = user_obj.insentive.map((value: any) => {
+                    return new InsentiveModel({
+                        point: value.point,
+                        weight: value.weight
+                    });
+                })
+
+                user_obj.insentive.forEach(async (value: any) => {
+                    await value.save();
+                })
+            }
+
             await UserModel.updateOne({ _id: request.params.id_user }, user_obj);
             user = await UserModel.findById({ _id: request.params.id_user });
         } catch(error) {
@@ -111,7 +141,7 @@ class UserController {
                 description: `User ${request.params.id_user} could not be updated`
             });
         }
-        response.status(201).json({
+        response.status(200).json({
             status: "OK",
             code: 200,
             description: "user was updated successfully",
