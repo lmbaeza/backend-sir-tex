@@ -82,14 +82,14 @@ class ContainerController {
         var container = undefined;
         try {
             container = await ContainerModel.findById({ _id: request.params.id_container });
-            await ContainerModel.updateOne({ _id: request.params.id_user }, container_obj);
+            await ContainerModel.updateOne({ _id: request.params.id_container }, container_obj);
             container = await ContainerModel.findById({ _id: request.params.id_container });
         } catch(error) {
             console.log(error);
             return response.status(400).json({
                 status: "Bad Request",
                 code: 400,
-                description: `container ${request.params.id_user} could not be updated`
+                description: `container ${request.params.id_container} could not be updated`
             });
         }
         response.status(200).json({
