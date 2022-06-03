@@ -12,7 +12,14 @@ class UserController {
     }
 
     public async getUser(request: Request, response: Response) {
-        const all = await UserModel.findById(request.params.id_user);
+        var all: any = null;
+        try {
+            all = await UserModel.findById(request.params.id_user);
+        } catch(err) {}
+
+        if(all === null) {
+            all = await UserModel.findOne({username: request.params.id_user});
+        }
         response.status(200).json(all);
     }
 
@@ -33,7 +40,7 @@ class UserController {
             id: request.body.id,
             insentive,
             username: request.body.username,
-            password: crypto.createHmac('sha256', request.body.password).digest('hex'),
+            password: crypto.createHash('sha256').update(request.body.password).digest('hex'),
             update_at: Date.now()
         });
 
@@ -97,7 +104,7 @@ class UserController {
             id: request.body.id,
             insentive: request.body.insentive,
             username: request.body.username,
-            password: request.body.password?crypto.createHmac('sha256', request.body.password).digest('hex') : undefined,
+            password: request.body.password?crypto.createHash('sha256').update(request.body.password).digest('hex') : undefined,
             update_at: Date.now()
         };
 

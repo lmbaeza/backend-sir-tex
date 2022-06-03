@@ -4,6 +4,7 @@ import express from 'express'
 import UserRoutes from './routes/user.router'
 import ContainerRoutes from './routes/container.router'
 import CompanyRoutes from './routes/company.router'
+import cors from 'cors'
 
 // Initializations
 const app = express();
@@ -15,6 +16,13 @@ app.set('port', process.env.PORT || 3000);
 // Middlewares
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+
+const allowedOrigins = ['http://localhost:3001'];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins
+};
+app.use(cors(options));
 
 // Routes
 app.use('/user', UserRoutes);
