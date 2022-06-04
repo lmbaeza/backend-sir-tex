@@ -38,6 +38,7 @@ class UserController {
             last_name: request.body.last_name,
             id_type: request.body.id_type,
             id: request.body.id,
+            role: request.body.role,
             insentive,
             username: request.body.username,
             password: crypto.createHash('sha256').update(request.body.password).digest('hex'),
@@ -104,6 +105,7 @@ class UserController {
             id: request.body.id,
             insentive: request.body.insentive,
             username: request.body.username,
+            role: request.body.role,
             password: request.body.password?crypto.createHash('sha256').update(request.body.password).digest('hex') : undefined,
             update_at: Date.now()
         };

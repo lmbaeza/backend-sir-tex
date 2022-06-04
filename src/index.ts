@@ -17,7 +17,8 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-const allowedOrigins = ['http://localhost:3001'];
+// const allowedOrigins = ['http://localhost:3001'];
+const allowedOrigins = ['*'];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins

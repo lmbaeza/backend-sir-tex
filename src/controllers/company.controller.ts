@@ -38,7 +38,7 @@ class CompanyController {
             status: "Created",
             code: 201,
             description: "campany was created successfully",
-            user: answer
+            company: answer
         });
     }
 

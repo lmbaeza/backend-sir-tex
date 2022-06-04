@@ -38,7 +38,7 @@ class ContainerController {
             status: "Created",
             code: 201,
             description: "container was created successfully",
-            user: answer
+            container: answer
         });
     }
 
