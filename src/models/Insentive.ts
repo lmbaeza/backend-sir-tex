@@ -1,9 +1,14 @@
 import mongoose, { Schema, model } from 'mongoose';
 
+import {Company, CompanySchema} from './Company'
+
 export interface Insentive extends mongoose.Document {
     point: number;
     weight: number;
     redeemed: boolean;
+    company_redeemed: Company;
+    create_at: Date;
+    update_at: Date;
 }
 
 export const InsentiveSchema = new Schema({
@@ -18,7 +23,19 @@ export const InsentiveSchema = new Schema({
     redeemed: {
         type: Boolean,
         default: false
-    }
+    },
+    company_redeemed: {
+        type: CompanySchema,
+        default: null
+    },
+    create_at: {
+        type: Date,
+        default: Date.now
+    },
+    update_at: {
+        type: Date,
+        default: Date.now
+    },
 });
 
 export default model<Insentive>('Insentive', InsentiveSchema);
