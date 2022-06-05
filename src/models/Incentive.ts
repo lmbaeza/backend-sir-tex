@@ -1,4 +1,5 @@
 import mongoose, { Schema, model } from 'mongoose';
+import QRCode from 'qrcode';
 
 import {Company, CompanySchema} from './Company'
 
@@ -12,7 +13,7 @@ export interface Incentive extends mongoose.Document {
     update_at: Date;
 }
 
-export const IncentiveSchema = new Schema({
+export const IncentiveSchema = new Schema<Incentive>({
     point: {
         type: Number,
         min: 0
@@ -27,11 +28,11 @@ export const IncentiveSchema = new Schema({
     },
     qr: {
         type: String,
-        default: null
+        default: undefined
     },
     company_redeemed: {
         type: CompanySchema,
-        default: null
+        default: undefined
     },
     create_at: {
         type: Date,
@@ -41,6 +42,13 @@ export const IncentiveSchema = new Schema({
         type: Date,
         default: Date.now
     },
+});
+
+IncentiveSchema.pre('save', async function () {
+    var obj: any = this;
+    const URL = `${process.env.HOST_FRONTEND}/qr/${obj._id}` || `http://localhost:3001/qr/${obj._id}`;
+    const qr = await QRCode.toDataURL(URL);
+    this.qr = qr;
 });
 
 export default model<Incentive>('Incentive', IncentiveSchema);

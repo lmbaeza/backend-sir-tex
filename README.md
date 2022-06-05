@@ -10,6 +10,12 @@ DOCKER_BUILDKIT=0 docker build -t sir-tex:latest -f ./Dockerfile.dev .
 docker-compose up
 ```
 
+### Dev
+
+```
+clear && DOCKER_BUILDKIT=0 docker build -t sir-tex:latest -f ./Dockerfile.dev . && docker-compose down && docker-compose up
+```
+
 
 ### Mongo DB
 

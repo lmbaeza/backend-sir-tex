@@ -12,6 +12,7 @@ services:
       - sir-tex-network
     environment:
       PORT: 3000
+      HOST_FRONTEND: http://192.168.43.176:3001
   
   mongo:
     image: mongo:latest
