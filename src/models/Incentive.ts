@@ -6,6 +6,7 @@ export interface Incentive extends mongoose.Document {
     point: number;
     weight: number;
     redeemed: boolean;
+    qr: string;
     company_redeemed: Company;
     create_at: Date;
     update_at: Date;
@@ -23,6 +24,10 @@ export const IncentiveSchema = new Schema({
     redeemed: {
         type: Boolean,
         default: false
+    },
+    qr: {
+        type: String,
+        default: null
     },
     company_redeemed: {
         type: CompanySchema,

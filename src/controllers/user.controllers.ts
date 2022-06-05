@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
+import { Types } from 'mongoose';
 import crypto from 'crypto';
 
 import IncentiveModel from '../models/Incentive';
 import UserModel from '../models/User'
+import CompanyModel from '../models/Company'
 
 class UserController {
     public async getAll(request: Request, response: Response) {
@@ -155,6 +157,50 @@ class UserController {
             code: 200,
             description: "user was updated successfully",
             user
+        });
+    }
+
+    public async redeemIncentive(request: Request, response: Response) {
+        var user: any = null;
+        var incentive: any = null;
+        var company: any = null;
+        try {
+            console.log(request.params.id_user, request.params.id_incentive);
+
+            user = await UserModel.findById(request.params.id_user);
+            company = await CompanyModel.findOne({});
+            console.log(company);
+            await IncentiveModel.findOneAndUpdate(
+                {_id: new Types.ObjectId(request.params.id_incentive)},
+                {redeemed: true, company_redeemed: company}
+            );
+            
+            await UserModel.findOneAndUpdate(
+                {
+                    "incentive._id": new Types.ObjectId(request.params.id_incentive)
+                },
+                {
+                    "incentive.$.redeemed": true, 
+                    "incentive.$.company_redeemed": company
+                }
+                );
+                
+            incentive = await IncentiveModel.findById(request.params.id_incentive);
+            user = await UserModel.findById(request.params.id_user);
+        } catch(error) {
+            console.log(error);
+            return response.status(400).json({
+                status: "Bad Request",
+                code: 400,
+                description: `inventive ${request.params.id_user} could not be redeemed`
+            });
+        }
+        response.status(200).json({
+            status: "OK",
+            code: 200,
+            description: "incentive was redeemed",
+            user,
+            incentive
         });
     }
 }

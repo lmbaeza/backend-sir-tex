@@ -14,6 +14,10 @@ const URL_BASE = process.env.URL || "http://localhost:3000";
                 {
                     "point": 15,
                     "weight": 1000
+                },
+                {
+                    "point": 20,
+                    "weight": 1100
                 }
             ],
             "username": "lmbaeza",
