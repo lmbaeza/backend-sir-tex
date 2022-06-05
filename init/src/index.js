@@ -12,12 +12,20 @@ const URL_BASE = process.env.URL || "http://localhost:3000";
             "id": 1032503371,
             "incentive": [
                 {
-                    "point": 15,
-                    "weight": 1000
+                    "point": 200,
+                    "weight": 234
                 },
                 {
                     "point": 20,
-                    "weight": 1100
+                    "weight": 22
+                },
+                {
+                    "point": 35,
+                    "weight": 30
+                },
+                {
+                    "point": 50,
+                    "weight": 60
                 }
             ],
             "username": "lmbaeza",
@@ -46,7 +54,7 @@ const URL_BASE = process.env.URL || "http://localhost:3000";
 
         const container1 = await axios.post(URL_BASE + "/container", {
             "capacity": 1000,
-            "location": "Universidad Nacional"
+            "location": "UNAL 0001"
         });
         assert.equal(container1.status, 201);
         assert.equal(container1.statusText, "Created");
