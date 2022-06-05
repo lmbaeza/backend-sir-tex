@@ -1,6 +1,6 @@
 import mongoose, { Schema, model } from 'mongoose';
 
-import { Insentive, InsentiveSchema } from './Insentive'
+import { Incentive, IncentiveSchema } from './Incentive'
 
 const ID_TYPES = ['CC', 'CE'];
 const ROLES    = ['ADMIN', 'USER'];
@@ -11,7 +11,7 @@ export interface User extends mongoose.Document {
     id_type: string;
     id: number;
     role: string;
-    insentive: [Insentive];
+    incentive: [Incentive];
     username: string;
     password: string;
     create_at: Date;
@@ -56,7 +56,7 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    insentive: [InsentiveSchema],
+    incentive: [IncentiveSchema],
     create_at: {
         type: Date,
         default: Date.now

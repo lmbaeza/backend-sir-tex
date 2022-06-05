@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import crypto from 'crypto';
 
-import InsentiveModel from '../models/Insentive';
+import IncentiveModel from '../models/Incentive';
 import UserModel from '../models/User'
 
 class UserController {
@@ -24,14 +24,14 @@ class UserController {
     }
 
     public async createUser(request: Request, response: Response) {
-        var insentive = request.body.insentive.map((value: any) => {
-            return new InsentiveModel({
+        var incentive = request.body.incentive.map((value: any) => {
+            return new IncentiveModel({
                 point: value.point,
                 weight: value.weight
             });
         });
 
-        InsentiveModel.insertMany(insentive);
+        IncentiveModel.insertMany(incentive);
 
         const user = new UserModel({
             first_name: request.body.first_name,
@@ -39,7 +39,7 @@ class UserController {
             id_type: request.body.id_type,
             id: request.body.id,
             role: request.body.role,
-            insentive,
+            incentive,
             username: request.body.username,
             password: crypto.createHash('sha256').update(request.body.password).digest('hex'),
             update_at: Date.now()
@@ -71,10 +71,10 @@ class UserController {
         var user = undefined;
         try {
             user = await UserModel.findById({ _id: request.params.id_user });
-            var arr = user?.insentive;
+            var arr = user?.incentive;
             if(arr !== undefined) {
                 for(var value of arr) {
-                    await InsentiveModel.deleteOne({ _id: value?._id });
+                    await IncentiveModel.deleteOne({ _id: value?._id });
                 }
             }
             await UserModel.deleteOne({ _id: user?._id });
@@ -103,7 +103,7 @@ class UserController {
             last_name: request.body.last_name,
             id_type: request.body.id_type,
             id: request.body.id,
-            insentive: request.body.insentive,
+            incentive: request.body.incentive,
             username: request.body.username,
             role: request.body.role,
             password: request.body.password?crypto.createHash('sha256').update(request.body.password).digest('hex') : undefined,
@@ -120,22 +120,22 @@ class UserController {
         try {
             user = await UserModel.findById({ _id: request.params.id_user });
 
-            var arr = user?.insentive;
+            var arr = user?.incentive;
             if(arr !== undefined) {
                 for(var value of arr) {
-                    await InsentiveModel.deleteOne({ _id: value?._id });
+                    await IncentiveModel.deleteOne({ _id: value?._id });
                 }
             }
 
-            if(user_obj['insentive'] !== undefined) {
-                user_obj.insentive = user_obj.insentive.map((value: any) => {
-                    return new InsentiveModel({
+            if(user_obj['incentive'] !== undefined) {
+                user_obj.incentive = user_obj.incentive.map((value: any) => {
+                    return new IncentiveModel({
                         point: value.point,
                         weight: value.weight
                     });
                 })
 
-                user_obj.insentive.forEach(async (value: any) => {
+                user_obj.incentive.forEach(async (value: any) => {
                     await value.save();
                 })
             }

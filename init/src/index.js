@@ -10,7 +10,7 @@ const URL_BASE = process.env.URL || "http://localhost:3000";
             "last_name": "Báez Aponte",
             "id_type": "CC",
             "id": 1032503371,
-            "insentive": [
+            "incentive": [
                 {
                     "point": 15,
                     "weight": 1000
@@ -29,7 +29,7 @@ const URL_BASE = process.env.URL || "http://localhost:3000";
             "id_type": "CC",
             "id": 123,
             "role": "ADMIN",
-            "insentive": [],
+            "incentive": [],
             "username": "admin",
             "password": "password"
         });

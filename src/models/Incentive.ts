@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from 'mongoose';
 
 import {Company, CompanySchema} from './Company'
 
-export interface Insentive extends mongoose.Document {
+export interface Incentive extends mongoose.Document {
     point: number;
     weight: number;
     redeemed: boolean;
@@ -11,7 +11,7 @@ export interface Insentive extends mongoose.Document {
     update_at: Date;
 }
 
-export const InsentiveSchema = new Schema({
+export const IncentiveSchema = new Schema({
     point: {
         type: Number,
         min: 0
@@ -38,4 +38,4 @@ export const InsentiveSchema = new Schema({
     },
 });
 
-export default model<Insentive>('Insentive', InsentiveSchema);
+export default model<Incentive>('Incentive', IncentiveSchema);
