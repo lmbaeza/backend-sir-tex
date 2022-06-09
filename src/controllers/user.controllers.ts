@@ -33,7 +33,9 @@ class UserController {
             });
         });
 
-        IncentiveModel.insertMany(incentive);
+        for(let i = 0; i < incentive.length; i++) {
+            await incentive[i].save();
+        }
 
         const user = new UserModel({
             first_name: request.body.first_name,

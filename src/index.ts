@@ -5,6 +5,7 @@ import morgan from 'morgan'
 import UserRoutes from './routes/user.router'
 import ContainerRoutes from './routes/container.router'
 import CompanyRoutes from './routes/company.router'
+import CodeRoutes from './routes/code.router'
 import cors from 'cors'
 
 // Initializations
@@ -32,6 +33,7 @@ app.use(cors(options));
 app.use('/user', UserRoutes);
 app.use('/container', ContainerRoutes);
 app.use('/company', CompanyRoutes);
+app.use('/code', CodeRoutes);
 
 // Run Server
 
