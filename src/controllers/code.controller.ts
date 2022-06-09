@@ -10,7 +10,7 @@ class CodeController {
     }
 
     public async getCode(request: Request, response: Response) {
-        const container = await CodeModel.findById(request.params.id_code);
+        const container = await CodeModel.findOne({ code: request.params.code });
         response.status(200).json(container);
     }
 
