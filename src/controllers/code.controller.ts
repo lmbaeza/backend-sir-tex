@@ -67,7 +67,8 @@ class CodeController {
     public async updateCode(request: Request, response: Response) {
 
         var codeObj: any = {
-            code: request.body.code
+            code: request.body.code,
+            used: request.body.used
         };
 
         Object.keys(codeObj).forEach(key => {

@@ -139,9 +139,9 @@ class UserController {
                     });
                 })
 
-                user_obj.incentive.forEach(async (value: any) => {
+                for(const value of user_obj.incentive) {
                     await value.save();
-                })
+                }
             }
 
             await UserModel.updateOne({ _id: request.params.id_user }, user_obj);
