@@ -46,7 +46,7 @@ export const IncentiveSchema = new Schema<Incentive>({
 
 IncentiveSchema.pre('save', async function () {
     var obj: any = this;
-    const URL = `${process.env.HOST_FRONTEND}/qr/${obj._id}` || `http://localhost:3001/qr/${obj._id}`;
+    const URL = `${process.env.HOST_FRONTEND}/incentive/qr/${obj._id}` || `http://localhost:3001/incentive/qr/${obj._id}`;
     const qr = await QRCode.toDataURL(URL);
     this.qr = qr;
 });
