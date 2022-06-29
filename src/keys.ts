@@ -1,3 +1,3 @@
 export const mongodb = {
-    "URI": "mongodb://mongo:27017/sir-tex-db"
+    "URI": process.env.MONGODB || "mongodb://mongo:27017/sir-tex-db"
 }
